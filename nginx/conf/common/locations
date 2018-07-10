@@ -1,0 +1,19 @@
+# Request methods limit
+if ($request_method !~* ^(GET|HEAD|POST)$) {
+    return 405;
+}
+
+# Bot filter
+if ($http_user_agent ~* (MJ12bot|Solomono|Ahrefs|SISTRIX|LinkpadBot|nmap|nikto|wikto|sqlmap|bsqlbf|w3af|acunetix|havij|appscan)) {
+    return 444;
+}
+
+# (www.xxx.com => xxx.com)
+if ($host ~* ^www\.(.+)$) {
+    set $host_without_www $1;
+    return 301 $scheme://$1$request_uri;
+}
+
+location ~* /\.(?!(well|known|(well\-known))) {
+    deny all;
+}
