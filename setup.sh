@@ -25,16 +25,14 @@ if [[ -z $(docker images | grep mysql/mysql-server) ]]; then
     docker pull mysql/mysql-server
 fi
 
-fi
-
-if [[ -z $(docker images | grep coiotworker) ]]; then 
+if [[ -z $(docker images | grep mathtin/coiotworker) ]]; then 
     echo "[*] Pulling coiotworker"
-    docker pull coiotworker
+    docker pull mathtin/coiotworker
 fi
 
-if [[ -z $(docker images | grep coiothub) ]]; then 
+if [[ -z $(docker images | grep mathtin/coiothub) ]]; then 
     echo "[*] Pulling coiothub"
-    docker pull coiothub
+    docker pull mathtin/coiothub
 fi
 
 # NGINX:
@@ -93,7 +91,7 @@ docker rm $CONT_HUB &> /dev/null
 echo "[*] Running hub server"
 docker run --name $CONT_HUB \
            --net $CONT_NETWORK --ip 10.11.0.4 \
-           -d coiothub
+           -d mathtin/coiothub
 sleep 2s
 if [[ -z $(docker ps | grep $CONT_HUB) ]]; then
     echo "[!] hub server is down"
